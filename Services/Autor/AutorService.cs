@@ -16,6 +16,25 @@ namespace WebAPI.Services.Autor
             _context = context;
         }
 
+        public async Task<ResponseModel<List<AutorModel>>> ListarAutores()
+        {
+            ResponseModel<List<AutorModel>> resposta = new ResponseModel<List<AutorModel>>();
+
+            try
+            {
+                var autores = await _context.Autores.ToListAsync();
+                resposta.Dados = autores;
+                return resposta;
+
+            }
+            catch (Exception ex)
+            {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+        }
+
         public async Task<ResponseModel<AutorModel>> BuscarAutorPorId(int IdAutor)
         {
             ResponseModel<AutorModel> resposta = new ResponseModel<AutorModel>();
@@ -73,23 +92,5 @@ namespace WebAPI.Services.Autor
             }
         }
 
-        public async Task<ResponseModel<List<AutorModel>>> ListarAutores()
-        {
-            ResponseModel <List<AutorModel>> resposta = new ResponseModel<List<AutorModel>>();
-
-            try
-            {
-                var autores = await _context.Autores.ToListAsync();
-                resposta.Dados = autores;
-                return resposta;
-
-            }
-            catch (Exception ex)
-            {
-                resposta.Mensagem = ex.Message;
-                resposta.Status = false;
-                return resposta;
-            }
-        }
     }
 }
