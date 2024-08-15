@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Dto.Autor;
 using WebAPI.Models;
 using WebAPI.Services.Autor;
 
@@ -41,6 +42,25 @@ namespace WebAPI.Controllers
             return Ok(autor);
         }
 
+        [HttpPost("CriarAutor")]
+        public async Task<ActionResult<ResponseModel<List<AutorModel>>>> CriarAutor(AutorCriacaoDto autorCriacaoDto)
+        {
+            var autor = await _autorInterface.CriarAutor(autorCriacaoDto);
+            return Ok(autorCriacaoDto);
+        }
 
+        [HttpPut("EditarAutor")]
+        public async Task<ActionResult<ResponseModel<List<AutorModel>>>> EditarAutor(AutorEdicaoDto autorEdicaoDto)
+        {
+            var autor = await _autorInterface.EditarAutor(autorEdicaoDto);
+            return Ok(autor);
+        }
+
+        [HttpDelete("DeletarAutor")]
+        public async Task<ActionResult<ResponseModel<List<AutorModel>>>> DeletarAutor(int IdAutor)
+        {
+            var autor = await _autorInterface.DeletarAutor(IdAutor);
+            return Ok(autor);
+        }
     }
 }

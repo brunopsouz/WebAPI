@@ -14,5 +14,7 @@ namespace WebAPI.Models
         [JsonIgnore]
         public ICollection<LivroModel> Livros { get; set; }
 
+
+
     }
 }

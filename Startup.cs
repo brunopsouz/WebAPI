@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Data;
 using WebAPI.Services.Autor;
+using WebAPI.Services.Livro;
 
 namespace WebAPI
 {
@@ -37,6 +38,7 @@ namespace WebAPI
             });
 
             services.AddScoped<IAutorInterface, AutorService>();
+            services.AddScoped<ILivroInterface, LivroService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
