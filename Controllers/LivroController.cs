@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Dto.Livro;
 using WebAPI.Models;
 using WebAPI.Services.Livro;
 
@@ -26,5 +27,37 @@ namespace WebAPI.Controllers
             return Ok(livro);
         }
 
+        [HttpGet("ListarLivros")]
+        public async Task<ActionResult<ResponseModel<LivroModel>>> ListarLivros()
+        {
+            var livros = await _livroInterface.ListarLivros();
+            return Ok(livros);
+        }
+        [HttpGet("BuscarLivroPorIdAutor/{IdAutor}")]
+        public async Task<ActionResult<ResponseModel<LivroModel>>> BuscarLivroPorIdAutor(int IdAutor)
+        {
+            var livros = await _livroInterface.BuscarLivroPorIdAutor(IdAutor);
+            return Ok(livros);
+        }
+        [HttpPost("CriarLivro")]
+        public async Task<ActionResult<ResponseModel<List<LivroModel>>>> CriarLivro(LivroCriacaoDto livroCriacaoDto)
+        {
+            var livro = await _livroInterface.CriarLivro(livroCriacaoDto);
+            return Ok(livro);
+        }
+        [HttpPut("EditarLivro")]
+        public async Task<ActionResult<ResponseModel<List<LivroModel>>>> EditarLivro(LivroEdicaoDto livroEdicaoDto)
+        {
+            var livro = await _livroInterface.EditarLivro(livroEdicaoDto);
+            return Ok(livro);
+        }
+
+        [HttpDelete("DeletarLivro")]
+        public async Task<ActionResult<ResponseModel<List<LivroModel>>>> ExcluirLivro(int IdLivro)
+        {
+            var livro = await _livroInterface.ExcluirLivro(IdLivro);
+            return Ok(livro);
+        }
     }
 }
+
