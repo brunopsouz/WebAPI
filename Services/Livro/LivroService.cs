@@ -25,7 +25,9 @@ namespace WebAPI.Services.Livro
 
             try
             {
-                var livros = await _context.Livros.ToListAsync();
+                var livros = await _context.Livros
+                    .Include(a => a.Autor)
+                    .ToListAsync();
                 resposta.Dados = livros;
                 resposta.Status = true;
                 return resposta;
@@ -145,6 +147,9 @@ namespace WebAPI.Services.Livro
                 var livro = await _context.Livros
                     .FirstOrDefaultAsync(livroBanco => livroBanco.Id == livroEdicaoDto.Id);
 
+                var autor = await _context.Autores
+                    .FirstOrDefaultAsync(autorBanco => autorBanco.Id == livroEdicaoDto.Autor.Id);
+
                 if (livro == null)
                 {
                     resposta.Mensagem = "Não foram encontrados livros";
@@ -152,9 +157,20 @@ namespace WebAPI.Services.Livro
                     return resposta;
                 }
 
+                if (autor == null)
+                {
+                    resposta.Mensagem = "Não foi encontrados Autor";
+                    resposta.Status = false;
+                    return resposta;
+                }
+
                 if (livroEdicaoDto.Titulo != null)
                 {
                     livro.Titulo = livroEdicaoDto.Titulo;
+                }
+                if (livroEdicaoDto.Autor.Id.ToString() != null)
+                {
+                    livro.Autor = autor;
                 }
 
                 _context.Livros.Update(livro);
@@ -192,7 +208,9 @@ namespace WebAPI.Services.Livro
 
                 _context.Remove(livro);
                 await _context.SaveChangesAsync();
-                resposta.Dados = await _context.Livros.ToListAsync();
+                resposta.Dados = await _context.Livros
+                    .Include(a => a.Autor)
+                    .ToListAsync();
                 return resposta;
 
             }

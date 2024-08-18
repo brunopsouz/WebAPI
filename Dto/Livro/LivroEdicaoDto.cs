@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Dto.Vinculos;
+using WebAPI.Models;
 
 namespace WebAPI.Dto.Livro
 {
@@ -9,6 +11,7 @@ namespace WebAPI.Dto.Livro
     {
         public int Id { get; set; }
         public string Titulo { get; set; }
+        public AutorVinculoDto Autor { get; set; }
 
     }
 }
